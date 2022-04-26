@@ -1,1 +1,48 @@
+1. 如何打开VBA?
+  Alt+F11
+  右键点击工资表，选择检视代码
+  开发人员 Visual Basic
 
+2. VBA界面介绍： 
+  工具栏
+  专案视窗
+  代码视窗
+  
+3. 编写第一支VBA代码
+  专案视窗 右键 插入 模组 
+  输入代码 
+    Sub Code()
+    工作表1.Range("A1")= "abcd"
+    End Sub
+  执行
+  
+4. 变量声明： Dim 变量名 As 类型
+   变量类型：Integer
+            String
+            Range
+            Workbook
+
+5. 判断： 
+  If ...
+  Then...
+  Else...
+  End If
+  
+6. 循环：
+  For i=1 To 10
+  工作表1.Range("A"&i) = "Hello"
+  Next
+  
+7. 提前退出某过程：Exit Sub
+   提前退出所有过程：End
+   
+8. 有参数"过程"的使用方法：
+   Sub Main()
+   Info "abcd"
+   End Sub
+   
+   Sub Info(information as String)
+   工作表1.Range("A1")= information
+   End Sub
+   
+9.
