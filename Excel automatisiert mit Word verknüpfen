@@ -1,0 +1,73 @@
+# https://vbatrainer.de/excel-word-verknuepfen/ 
+
+Sub ExportToWord()
+'Bibliothek aktivieren
+Dim wordapp As New Word.Application
+Dim doc As Word.Document
+Dim wrdPic As Word.InlineShape
+Dim Zeile As Long
+Zeile = ActiveCell.Row
+'Word sichtbar machen
+wordapp.Visible = True
+'Word-Datei öffnen
+Set doc = wordapp.Documents.Open("C:\Users\kaiwe\Desktop\Newsletter-Template.docx")
+'Word-Datei mit Excel-Daten befüllen
+doc.Bookmarks("Firma").Range.Text = Kundendaten.Cells(Zeile, 5).Value
+doc.Bookmarks("Straße").Range.Text = Kundendaten.Cells(Zeile, 7).Value
+doc.Bookmarks("Ort").Range.Text = Kundendaten.Cells(Zeile, 8).Value
+doc.Bookmarks("Land").Range.Text = Kundendaten.Cells(Zeile, 9).Value
+doc.Bookmarks("Datum").Range.Text = Date
+doc.Bookmarks("Ansprechpartner").Range.Text = Kundendaten.Cells(Zeile, 6).Value
+'Bild einfügen
+Set wrdPic = doc.Bookmarks("Bild").Range.InlineShapes.AddPicture("C:\Users\kaiwe\Desktop\Beispielbild.jpg")
+'wrdPic.ScaleHeight = 10
+'wrdPic.ScaleWidth = 10
+'Word-Datei abspeichern
+doc.SaveAs2 ThisWorkbook.Path & "\Newsletter " & Kundendaten.Cells(Zeile, 4).Value & ".docx"
+'Word-Datei als PDF abspeichern
+doc.ExportAsFixedFormat ThisWorkbook.Path & "\Newsletter " & Kundendaten.Cells(Zeile, 4).Value & ".pdf", wdExportFormatPDF
+'Word-Datei schließen
+doc.Close SaveChanges:=False
+'Word-Applikation schließen
+wordapp.Quit
+End Sub
+Sub ExportToWord_Seriendruck()
+'Bibliothek aktivieren
+Dim wordapp As New Word.Application
+Dim doc As Word.Document
+Dim wrdPic As Word.InlineShape
+Dim Zeile As Long
+'Word sichtbar machen
+wordapp.Visible = True
+For Zeile = 11 To Kundendaten.Cells(Rows.Count, 4).End(xlUp).Row
+    'Word-Datei öffnen
+    Set doc = wordapp.Documents.Open("C:\Users\kaiwe\Desktop\Newsletter-Template.docx")
+    
+    'Word-Datei mit Excel-Daten befüllen
+    doc.Bookmarks("Firma").Range.Text = Kundendaten.Cells(Zeile, 5).Value
+    doc.Bookmarks("Straße").Range.Text = Kundendaten.Cells(Zeile, 7).Value
+    doc.Bookmarks("Ort").Range.Text = Kundendaten.Cells(Zeile, 8).Value
+    doc.Bookmarks("Land").Range.Text = Kundendaten.Cells(Zeile, 9).Value
+    doc.Bookmarks("Datum").Range.Text = Date
+    doc.Bookmarks("Ansprechpartner").Range.Text = Kundendaten.Cells(Zeile, 6).Value
+    
+    'Bild einfügen
+    Set wrdPic = doc.Bookmarks("Bild").Range.InlineShapes.AddPicture("C:\Users\kaiwe\Desktop\Beispielbild.jpg")
+    'wrdPic.ScaleHeight = 10
+    'wrdPic.ScaleWidth = 10
+    
+    'Word-Datei abspeichern
+    'doc.SaveAs2 ThisWorkbook.Path & "\Newsletter " & Kundendaten.Cells(Zeile, 4).Value & ".docx"
+    
+    'Word-Datei als PDF abspeichern
+    doc.ExportAsFixedFormat ThisWorkbook.Path & "\Newsletter " & Kundendaten.Cells(Zeile, 4).Value & ".pdf", wdExportFormatPDF
+    
+    'Word-Datei schließen
+    doc.Close SaveChanges:=False
+    
+Next Zeile
+'Word-Applikation schließen
+wordapp.Quit
+End Sub
+'Bereitgestellt von VBATrainer: www.vbatrainer.de
+End Sub
